@@ -3,39 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skaitymo Testas su Amžiaus Fiksavimu</title>
+    <title></title>
     <link rel="stylesheet" href="style.css">
     <script src="testLogic.js" defer></script>
 </head>
 <body>
 
     <div id="test-container">
-        <h1>Skaitymo Greičio Testas</h1>
-
-        <!-- Naujas pradinis langas amžiui įvesti -->
-        <div id="startup-screen" class="hidden">
-            <div class="form-group">
-                <label for="age-input">Įveskite savo amžių:</label>
-                <input type="number" id="age-input" min="1" required>
-            </div>
-            <button id="start-button-with-age" class="btn">Pradėti testą</button>
-        </div>
-
-        <!-- Testo sritis (nepakito) -->
+        <h1>Žodžių spėjimo testas</h1>
+        
         <div id="test-area" class="hidden">
             <p id="progress-indicator"></p>
             <p id="sentence-display"></p>
             <p id="timer-display">0.000 s</p>
         </div>
+        <p>Jeigu manote, kad žinote, koks bus rodomas žodis, spustelėkite tarpo klavišą</p>
+        <button id="start-button">Pradėti testą</button>
 
-        <!-- Mygtukai po testo -->
-        <div id="button-group-end" class="button-group hidden">
-            <button id="restart-button" class="btn">Kartoti testą</button>
-            <button id="save-button" class="btn">Atsisiųsti rezultatus (.json)</button>
+        <div id="result-container" class="hidden">
+            <h3>Galutiniai testo rezultatai (JSON formatu):</h3>
+            <pre id="result-json"></pre>
         </div>
-        
-        <!-- Pranešimas apie krovimą -->
-        <p id="loading-message">Kraunami sakiniai...</p>
     </div>
 </body>
 </html>
