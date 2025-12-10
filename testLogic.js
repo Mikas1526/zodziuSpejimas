@@ -14,6 +14,8 @@ const timerDisplay = document.getElementById('timer-display');
 const progressIndicator = document.getElementById('progress-indicator');
 const resultContainer = document.getElementById('result-container');
 const resultJson = document.getElementById('result-json');
+let guessInput = null;
+let guessSubmitButton = null;
 
 // --- BŪSENOS KINTAMIEJI ---
 let testActive = false; // Ar šiuo metu vyksta vieno sakinio testas
@@ -100,7 +102,56 @@ function stopTest(reason = 'user_stop') {
     const elapsedTimeSeconds = (endTime - startTime) / 1000;
     const revealedWordPart = sentenceDisplay.querySelector('.highlight').textContent;
 
-    // Sukuriame šio etapo rezultatą
+    // Jei sustabdyta vartotojo, parodyti laukelį spėjimui
+    if (reason === 'user_stop') {
+        showGuessInput((userGuess) => {
+            saveResult(userGuess, reason, elapsedTimeSeconds, revealedWordPart);
+            currentSentenceIndex++;
+            runNextSentence();
+        });
+    } else {
+        saveResult('', reason, elapsedTimeSeconds, revealedWordPart);
+        currentSentenceIndex++;
+        runNextSentence();
+    }
+}
+
+function showGuessInput(onSubmit) {
+    // Sukuriame input ir mygtuką, jei jų nėra
+    if (!guessInput) {
+        guessInput = document.createElement('input');
+        guessInput.type = 'text';
+        guessInput.placeholder = 'Įrašykite savo spėjimą';
+        guessInput.id = 'guess-input';
+        guessInput.className = 'styled-input';
+    }
+    if (!guessSubmitButton) {
+        guessSubmitButton = document.createElement('button');
+        guessSubmitButton.textContent = 'Patvirtinti spėjimą';
+        guessSubmitButton.id = 'guess-submit';
+        guessSubmitButton.className = 'styled-button';
+    }
+    // Pridedame į DOM
+    sentenceDisplay.appendChild(document.createElement('br'));
+    sentenceDisplay.appendChild(guessInput);
+    sentenceDisplay.appendChild(guessSubmitButton);
+    guessInput.value = '';
+    guessInput.focus();
+
+    function submitHandler() {
+        const userGuess = guessInput.value.trim();
+        // Pašaliname input ir mygtuką
+        if (guessInput.parentNode) guessInput.parentNode.removeChild(guessInput);
+        if (guessSubmitButton.parentNode) guessSubmitButton.parentNode.removeChild(guessSubmitButton);
+        onSubmit(userGuess);
+    }
+    guessSubmitButton.onclick = submitHandler;
+    guessInput.onkeydown = function(e) {
+        if (e.key === 'Enter') submitHandler();
+    };
+}
+
+function saveResult(userGuess, reason, elapsedTimeSeconds, revealedWordPart) {
     const result = {
         sentenceIndex: currentSentenceIndex,
         originalSentence: `${activeSentenceData.prefix}[${activeSentenceData.word}]`,
@@ -108,15 +159,10 @@ function stopTest(reason = 'user_stop') {
         revealedLetters: revealedWordPart,
         stoppedAtLetterIndex: revealedWordPart.length ? revealedWordPart.length - 1 : -1,
         totalTimeSeconds: parseFloat(elapsedTimeSeconds.toFixed(3)),
-        stopReason: reason
+        stopReason: reason,
+        userGuess: userGuess
     };
-    
-    // Išsaugome rezultatą bendrame masyve
     allResults.push(result);
-
-    // Pereiname prie kito sakinio
-    currentSentenceIndex++;
-    runNextSentence();
 }
 
 /**
