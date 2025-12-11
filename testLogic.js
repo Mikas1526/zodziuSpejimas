@@ -8,12 +8,39 @@ const LETTER_INTERVAL_MS = 1000;
 
 // --- DOM ELEMENTAI ---
 const startButton = document.getElementById('start-button');
+const instructionField = document.getElementById('instructions');
 const testArea = document.getElementById('test-area');
 const sentenceDisplay = document.getElementById('sentence-display');
 const timerDisplay = document.getElementById('timer-display');
 const progressIndicator = document.getElementById('progress-indicator');
 const resultContainer = document.getElementById('result-container');
 const resultJson = document.getElementById('result-json');
+const copyJsonBtn = document.getElementById('copy-json-btn');
+if (copyJsonBtn) {
+    copyJsonBtn.addEventListener('click', function() {
+        const jsonText = resultJson.textContent;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(jsonText).then(() => {
+                copyJsonBtn.textContent = 'Nukopijuota!';
+                setTimeout(() => {
+                    copyJsonBtn.textContent = 'Kopijuoti JSON';
+                }, 1200);
+            });
+        } else {
+            // Fallback for older browsers
+            const textarea = document.createElement('textarea');
+            textarea.value = jsonText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            copyJsonBtn.textContent = 'Nukopijuota!';
+            setTimeout(() => {
+                copyJsonBtn.textContent = 'Kopijuoti JSON';
+            }, 1200);
+        }
+    });
+}
 let guessInput = null;
 let guessSubmitButton = null;
 
@@ -54,7 +81,7 @@ function runNextSentence() {
     testActive = true;
     activeSentenceData = SENTENCES[currentSentenceIndex];
 
-    // Parodome eigą (pvz., "Sakinys 1 iš 3")
+    // Parodome eigą (pvz., "Sakinys 1 iš X")
     progressIndicator.textContent = `Sakinys ${currentSentenceIndex + 1} iš ${SENTENCES.length}`;
     sentenceDisplay.innerHTML = `${activeSentenceData.prefix}<span class="highlight"></span>`;
     timerDisplay.textContent = "0.000 s";
@@ -170,6 +197,7 @@ function saveResult(userGuess, reason, elapsedTimeSeconds, revealedWordPart) {
  */
 function displayFinalResults() {
     resultJson.textContent = JSON.stringify(allResults, null, 2);
+    instructionField.textContent = "Ačiū, kad dalyvavote!";
     resultContainer.classList.remove('hidden');
     startButton.textContent = "Kartoti testą";
     startButton.classList.remove('hidden');
