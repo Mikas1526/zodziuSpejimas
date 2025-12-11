@@ -64,7 +64,7 @@ function startTest() {
     resultContainer.classList.add('hidden');
     startButton.classList.add('hidden');
     testArea.classList.remove('hidden');
-
+    instructionField.textContent = "Jeigu manote, kad žinote, koks bus rodomas žodis, spustelėkite tarpo klavišą";
     runNextSentence();
 }
 
