@@ -86,7 +86,7 @@ function runNextSentence() {
     testActive = true;
     activeSentenceData = SENTENCES[currentSentenceIndex];
 
-    // Parodome eigą (pvz., "Sakinys 1 iš X")
+    // Parodome eigą ("Sakinys 1 iš X")
     progressIndicator.textContent = `Sakinys ${currentSentenceIndex + 1} iš ${SENTENCES.length}`;
     sentenceDisplay.innerHTML = `${activeSentenceData.prefix}<span class="highlight"></span>`;
     timerDisplay.textContent = "0.000 s";
