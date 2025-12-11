@@ -1,10 +1,15 @@
 // --- KONFIGŪRACIJA ---
-const SENTENCES = [
-    { prefix: "Šiandien graži ", word: "diena" },
-    { prefix: "Vakar vakare skaičiau įdomią ", word: "knygą" },
-    { prefix: "Rytoj planuoju aplankyti senus ", word: "draugus" }
-];
+let SENTENCES = [];
 const LETTER_INTERVAL_MS = 1000;
+
+function loadSentences(callback) {
+    fetch('sentences.json')
+        .then(response => response.json())
+        .then(data => {
+            SENTENCES = data;
+            if (typeof callback === 'function') callback();
+        });
+}
 
 // --- DOM ELEMENTAI ---
 const startButton = document.getElementById('start-button');
@@ -215,5 +220,11 @@ function handleKeyPress(event) {
 }
 
 // --- IVYKIŲ KLAUSYTOJAI ---
-startButton.addEventListener('click', startTest);
+startButton.addEventListener('click', function() {
+    if (SENTENCES.length === 0) {
+        loadSentences(startTest);
+    } else {
+        startTest();
+    }
+});
 document.addEventListener('keydown', handleKeyPress);
