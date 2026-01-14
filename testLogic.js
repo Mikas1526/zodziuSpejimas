@@ -6,7 +6,7 @@ function loadSentences(callback) {
     fetch('sentences.json')
         .then(response => {
             if (!response.ok) {
-                throw new Error("Nepavyko užkrauti sentences.json. Patikrinkite failą.");
+                throw new Error("Nepavyko pakrauti sakinių!");
             }
             return response.json();
         })
@@ -215,11 +215,11 @@ function displayFinalResults() {
     };
 
     resultJson.textContent = JSON.stringify(finalData, null, 2);
-    instructionField.innerHTML = "Ačiū, kad dalyvavote! <br>Norėdami kartoti testą, vėl užpildykite formą.";
+    instructionField.innerHTML = "Ačiū, kad dalyvavote! <br>Norėdami kartoti testą, spustelėkite mygtuką.";
     resultContainer.classList.remove('hidden');
     startButton.classList.remove('hidden');
     testArea.classList.add('hidden');
-    startButton.textContent = "Kartoti testą"; 
+    startButton.textContent = "Kartoti testą";
 }
 
 /**
