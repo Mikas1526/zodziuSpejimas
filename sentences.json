@@ -1,5 +1,14 @@
 [
-  { "prefix": "Šiandien graži ", "word": "diena" },
-  { "prefix": "Vakar vakare skaičiau įdomią ", "word": "knygą" },
-  { "prefix": "Rytoj planuoju aplankyti senus ", "word": "draugus" }
+  { "prefix": "Suskambo mano ", "word": "telefonas" },
+  { "prefix": "Sugedo senas ", "word": "kompiuteris" },
+  { "prefix": "Susipažinau su ", "word": "mergina" },
+  { "prefix": "Aš studijuoju ", "word": "universitete" },
+  { "prefix": "Dėstytojas vedė įdomų ", "word": "seminarą" },
+  { "prefix": "Šalyje klesti laisvė ir ", "word": "demokratija" },
+  { "prefix": "Jam sekasi ", "word": "matematika" },
+  { "prefix": "Vakar pasirašiau ", "word": "dokumentus" },
+  { "prefix": "Ar gali įjungti ", "word": "televizorių" },
+  { "prefix": "Aš turiu naują ", "word": "fotoaparatą" },
+  { "prefix": "Jis išmano ", "word": "literatūrą" },
+  { "prefix": "Aš domiuosi ", "word": "menu" }
 ]
